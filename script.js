@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         layout: '3x1',
                         codes: {
                             url: { displayName: "Texto/URL", icon: 'ti-world', placeholder: "Ej: https://www.google.com", hint: "Puede codificar texto, URLs, etc.", type: "2d" },
-                            event: { displayName: "Evento", icon: 'ti-calendar-week', hint: "Rellena los campos para generar el QR del evento.", type: "2d" },
+                            event: { displayName: "Evento", icon: 'ti-calendar-week', hint: "Solo el título y fecha de inicio son obligatorios. La hora es opcional.", type: "2d" },
                             wifi: { displayName: "WiFi", icon: 'ti-wifi', hint: "Rellena los campos para generar el QR de la red WiFi.", type: "2d" }
                         }
                     }

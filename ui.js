@@ -120,12 +120,43 @@
         document.getElementById('barcode-svg').style.display = 'none';
         document.getElementById('qr-code-container').innerHTML = '';
         document.getElementById('qr-code-container').style.display = 'none';
+        
+        // Inicializar el auto-resize del textarea
+        setTimeout(() => autoResizeTextarea(), 0);
     }
 
     function autoResizeTextarea() {
         const dataInput = document.getElementById('barcode-data');
+        if (!dataInput) return;
+        
+        // Resetear altura para calcular correctamente
         dataInput.style.height = 'auto';
-        dataInput.style.height = `${Math.min(dataInput.scrollHeight, 200)}px`; // 200px = aproximadamente 7 líneas
+        dataInput.style.overflowY = 'hidden';
+        
+        // Obtener estilos computados para calcular altura de línea
+        const styles = window.getComputedStyle(dataInput);
+        const lineHeight = parseFloat(styles.lineHeight) || 24; // Fallback a 24px si no está definido
+        const paddingTop = parseFloat(styles.paddingTop) || 0;
+        const paddingBottom = parseFloat(styles.paddingBottom) || 0;
+        const borderTop = parseFloat(styles.borderTopWidth) || 0;
+        const borderBottom = parseFloat(styles.borderBottomWidth) || 0;
+        
+        // Calcular altura máxima para 7 líneas
+        const maxLines = 7;
+        const maxHeight = (lineHeight * maxLines) + paddingTop + paddingBottom + borderTop + borderBottom;
+        
+        // Altura actual del contenido
+        const contentHeight = dataInput.scrollHeight;
+        
+        if (contentHeight <= maxHeight) {
+            // Si el contenido cabe en 7 líneas o menos, ajustar sin scroll
+            dataInput.style.height = `${contentHeight}px`;
+            dataInput.style.overflowY = 'hidden';
+        } else {
+            // Si el contenido excede 7 líneas, fijar altura y mostrar scroll
+            dataInput.style.height = `${maxHeight}px`;
+            dataInput.style.overflowY = 'auto';
+        }
     }
 
     function initializeTheme() {

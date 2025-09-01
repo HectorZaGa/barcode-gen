@@ -30,21 +30,28 @@
         const endDate = document.getElementById('event-end-date').value;
         const endTime = document.getElementById('event-end-time').value;
 
-        if (!title || !startDate || !startTime) return null;
+        if (!title || !startDate) return null;
 
         const formatToUTC = (date) => {
             return date.toISOString().replace(/[-:.]/g, '').slice(0, 15) + 'Z';
         };
 
-        const dtstartObj = new Date(`${startDate} ${startTime}`);
+        // Si no hay hora de inicio, usar medianoche (00:00)
+        const defaultStartTime = startTime || '00:00';
+        const dtstartObj = new Date(`${startDate} ${defaultStartTime}`);
         const dtstart = formatToUTC(dtstartObj);
 
         let dtend;
         if (endDate && endTime) {
             const dtendObj = new Date(`${endDate} ${endTime}`);
             dtend = formatToUTC(dtendObj);
+        } else if (startTime) {
+            // Si hay hora de inicio, añadir 1 hora
+            const dtendObj = new Date(dtstartObj.getTime() + 60 * 60 * 1000);
+            dtend = formatToUTC(dtendObj);
         } else {
-            const dtendObj = new Date(dtstartObj.getTime() + 60 * 60 * 1000); // Añadir 1 hora
+            // Si no hay hora de inicio, hacer evento de todo el día (24 horas)
+            const dtendObj = new Date(dtstartObj.getTime() + 24 * 60 * 60 * 1000);
             dtend = formatToUTC(dtendObj);
         }
 
