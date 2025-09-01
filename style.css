@@ -49,7 +49,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 95vh;
     margin: 0;
     padding: 1rem;
     transition: background-color 0.3s, color 0.3s;
@@ -522,7 +522,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     body {
         padding: 0.5rem;
         overflow-y: auto;
-        margin-top: 1.5rem;
+        min-height: 95vh;
     }
 
     #app-stage {
@@ -562,6 +562,20 @@ textarea::-webkit-scrollbar-thumb:hover {
 
     .btn-grid.three-col {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .btn-nav:hover {
+        transform: none;
+        background-color: var(--display-bg-color);
+        border-color: var(--border-color);
+    }
+    
+    .btn-nav:active {
+        transform: scale(0.98);
+        background-color: var(--input-focus-shadow);
+        border-color: var(--primary-color);
     }
 }
 

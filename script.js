@@ -149,6 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicialización de datepickers
     function initializeDatepickers() {
+        // Detectar si estamos en vista móvil
+        const isMobile = window.innerWidth <= 768;
+        
         const localeEs = {
             days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
             daysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
@@ -162,34 +165,50 @@ document.addEventListener('DOMContentLoaded', () => {
             firstDay: 1
         };
 
-        const datepickerOptions = {
-        locale: localeEs,
-        onSelect: () => App.generator.generateBarcode(),
-        position: ({ $datepicker, $target, $pointer, done }) => {
-            let popper = Popper.createPopper($target, $datepicker, {
-                placement: 'top',
-                modifiers: [
-                    {
-                        name: 'offset',
-                        options: {
-                            offset: [0, 12]
+        // Configuraciones base
+        const baseOptions = {
+            locale: localeEs,
+            onSelect: () => App.generator.generateBarcode()
+        };
+
+        // Configuraciones específicas para desktop
+        const desktopOptions = {
+            ...baseOptions,
+            position: ({ $datepicker, $target, $pointer, done }) => {
+                let popper = Popper.createPopper($target, $datepicker, {
+                    placement: 'top',
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, 12]
+                            }
+                        },
+                        {
+                            name: 'arrow',
+                            options: {
+                                element: $pointer
+                            }
                         }
-                    },
-                    {
-                        name: 'arrow',
-                        options: {
-                            element: $pointer
-                        }
-                    }
-                ]
-            });
-            return function destroy() {
-                popper.destroy();
-                popper = null;
-                done();
+                    ]
+                });
+                return function destroy() {
+                    popper.destroy();
+                    popper = null;
+                    done();
+                }
             }
-        }
-    };
+        };
+
+        // Configuraciones específicas para móvil
+        const mobileOptions = {
+            ...baseOptions,
+            isMobile: true,
+            autoClose: true
+        };
+
+        // Seleccionar las opciones según el dispositivo
+        const datepickerOptions = isMobile ? mobileOptions : desktopOptions;
 
         // Inicializar datepickers solo si los elementos existen
         const startDateEl = document.getElementById('event-start-date');
@@ -210,4 +229,22 @@ document.addEventListener('DOMContentLoaded', () => {
         App.ui.initializePasswordToggle();
         App.ui.showScreen('categories');
     }, 100);
+
+    // Reinicializar datepickers al cambiar el tamaño de ventana
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Destruir datepickers existentes si existen
+            const dateElements = ['#event-start-date', '#event-end-date', '#event-start-time', '#event-end-time'];
+            dateElements.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element && element.airdatepicker) {
+                    element.airdatepicker.destroy();
+                }
+            });
+            // Reinicializar con nuevas configuraciones
+            initializeDatepickers();
+        }, 250);
+    });
 });
