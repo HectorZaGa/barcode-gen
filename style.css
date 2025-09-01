@@ -280,8 +280,9 @@ label {
 /* Centrar el último elemento cuando hay número impar de elementos en grilla de 2 columnas */
 .btn-grid.two-col .btn-nav:last-child:nth-child(odd) {
     grid-column: 1 / -1;
-    max-width: calc(50% - 0.5rem);
+    width: calc((100% - 1rem) / 2);
     margin: 0 auto;
+    max-width: none;
 }
 
 /* === FORMULARIOS === */
@@ -574,6 +575,14 @@ textarea::-webkit-scrollbar-thumb:hover {
 
     .btn-grid.three-col {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* En responsive, centrar el último elemento cuando hay número impar */
+    .btn-grid.three-col .btn-nav:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+        width: calc((100% - 1rem) / 2);
+        margin: 0 auto;
+        max-width: none;
     }
 }
 
