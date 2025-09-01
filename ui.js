@@ -180,6 +180,19 @@
         }
     }
 
+    function initializePasswordToggle() {
+        const toggleButton = document.getElementById('password-toggle-btn');
+        const passwordInput = document.getElementById('wifi-password');
+        const icon = toggleButton.querySelector('i');
+
+        toggleButton.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            icon.classList.toggle('ti-eye', !isPassword);
+            icon.classList.toggle('ti-eye-off', isPassword);
+        });
+    }
+
     window.App = window.App || {};
     window.App.ui = {
         showScreen,
@@ -187,5 +200,6 @@
         setupGeneratorUI,
         autoResizeTextarea,
         initializeTheme,
+        initializePasswordToggle,
     };
 })();

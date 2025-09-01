@@ -151,5 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new AirDatepicker('#event-end-time', { ...datepickerOptions, timepicker: true, onlyTimepicker: true, timeFormat: 'hh:mm AA' });
 
     App.ui.initializeTheme();
+    App.ui.initializePasswordToggle();
     App.ui.showScreen('categories');
 });
