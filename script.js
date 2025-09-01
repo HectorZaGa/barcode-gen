@@ -60,22 +60,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // =================================================================================
 
     // Referencias a elementos del DOM
-    const categoryButtons = document.querySelectorAll('.category-btn');
+    const categoryButtons = document.querySelectorAll('.btn-nav[data-category]');
     const codeSelectionBackBtn = document.getElementById('code-selection-back-btn');
     const generatorBackBtn = document.getElementById('generator-back-btn');
     const dataInput = document.getElementById('barcode-data');
     const eventInputs = document.querySelectorAll('#event-fields-container input, #event-fields-container textarea, #wifi-fields-container input, #wifi-fields-container select');
     const saveBtn = document.getElementById('save-btn');
+    const btnContainer = document.getElementById('btn-container');
 
-    // Navegación
-    categoryButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            App.state.currentCategory = btn.dataset.category;
-            App.state.navigationStack = [App.config[App.state.currentCategory]];
-            App.ui.populateCodeButtons();
-            App.ui.showScreen('codes');
-        });
-    });
+    // Helper para encontrar la configuración del código/subcategoría
+    function findCodeConfig(key, currentConfigLevel) {
+        if (!currentConfigLevel) return null;
+
+        if (currentConfigLevel.codes && currentConfigLevel.codes[key]) {
+            return currentConfigLevel.codes[key];
+        }
+
+        for (const codeKey in currentConfigLevel.codes) {
+            const code = currentConfigLevel.codes[codeKey];
+            if (code.subCategory) {
+                const found = findCodeConfig(key, code.subCategory);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+
+    // Navegación (manejada por el listener delegado en btnContainer para todos los botones de acción)
 
     codeSelectionBackBtn.addEventListener('click', () => {
         App.state.navigationStack.pop();
@@ -93,6 +104,40 @@ document.addEventListener('DOMContentLoaded', () => {
         App.ui.showScreen('codes');
     });
 
+    // Listeners para los botones de código estáticos y de categoría
+    document.addEventListener('click', (event) => {
+        const clickedBtn = event.target.closest('.btn-nav');
+        if (!clickedBtn) return;
+
+        if (clickedBtn.dataset.category) {
+            // Es un botón de categoría principal
+            App.state.currentCategory = clickedBtn.dataset.category;
+            App.state.navigationStack = [App.config[App.state.currentCategory]];
+            App.ui.populateCodeButtons();
+            App.ui.showScreen('codes');
+        } else if (clickedBtn.dataset.code) {
+            // Es un botón de código final
+            const codeKey = clickedBtn.dataset.code;
+            const currentConfigLevel = App.state.navigationStack[App.state.navigationStack.length - 1];
+            const codeConfig = findCodeConfig(codeKey, currentConfigLevel);
+            if (codeConfig) {
+                App.state.currentCodeKey = codeKey;
+                App.state.currentCodeConfig = codeConfig;
+                App.ui.setupGeneratorUI();
+                App.ui.showScreen('generator');
+            }
+        } else if (clickedBtn.dataset.subcategory) {
+            // Es un botón de subcategoría
+            const subcategoryKey = clickedBtn.dataset.subcategory;
+            const currentConfigLevel = App.state.navigationStack[App.state.navigationStack.length - 1];
+            const subcategoryConfig = findCodeConfig(subcategoryKey, currentConfigLevel);
+            if (subcategoryConfig && subcategoryConfig.subCategory) {
+                App.state.navigationStack.push(subcategoryConfig.subCategory);
+                App.ui.populateCodeButtons();
+            }
+        }
+    });
+
     // Listeners del generador
     dataInput.addEventListener('input', () => {
         App.ui.autoResizeTextarea();
@@ -102,21 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
     eventInputs.forEach(input => input.addEventListener('input', App.generator.generateBarcode));
     saveBtn.addEventListener('click', App.generator.saveBarcode);
 
-    // Inicialización de la aplicación
-    const localeEs = {
-        days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        daysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-        months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        today: 'Hoy',
-        clear: 'Limpiar',
-        dateFormat: 'dd/MM/yyyy',
-        timeFormat: 'hh:mm aa',
-        firstDay: 1
-    };
+    // Inicialización de datepickers
+    function initializeDatepickers() {
+        const localeEs = {
+            days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            daysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            daysMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            today: 'Hoy',
+            clear: 'Limpiar',
+            dateFormat: 'dd/MM/yyyy',
+            timeFormat: 'hh:mm aa',
+            firstDay: 1
+        };
 
-    const datepickerOptions = {
+        const datepickerOptions = {
         locale: localeEs,
         onSelect: () => App.generator.generateBarcode(),
         position: ({ $datepicker, $target, $pointer, done }) => {
@@ -145,12 +191,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    new AirDatepicker('#event-start-date', { ...datepickerOptions, dateFormat: 'yyyy-MM-dd' });
-    new AirDatepicker('#event-end-date', { ...datepickerOptions, dateFormat: 'yyyy-MM-dd' });
-    new AirDatepicker('#event-start-time', { ...datepickerOptions, timepicker: true, onlyTimepicker: true, timeFormat: 'hh:mm AA' });
-    new AirDatepicker('#event-end-time', { ...datepickerOptions, timepicker: true, onlyTimepicker: true, timeFormat: 'hh:mm AA' });
+        // Inicializar datepickers solo si los elementos existen
+        const startDateEl = document.getElementById('event-start-date');
+        const endDateEl = document.getElementById('event-end-date');
+        const startTimeEl = document.getElementById('event-start-time');
+        const endTimeEl = document.getElementById('event-end-time');
 
-    App.ui.initializeTheme();
-    App.ui.initializePasswordToggle();
-    App.ui.showScreen('categories');
+        new AirDatepicker('#event-start-date', { ...datepickerOptions, dateFormat: 'yyyy-MM-dd' });
+        new AirDatepicker('#event-end-date', { ...datepickerOptions, dateFormat: 'yyyy-MM-dd' });
+        new AirDatepicker('#event-start-time', { ...datepickerOptions, timepicker: true, onlyTimepicker: true, timeFormat: 'hh:mm AA' });
+        new AirDatepicker('#event-end-time', { ...datepickerOptions, timepicker: true, onlyTimepicker: true, timeFormat: 'hh:mm AA' });
+    }
+
+    // Inicializar todo después de que se carguen los scripts
+    setTimeout(() => {
+        initializeDatepickers();
+        App.ui.initializeTheme();
+        App.ui.initializePasswordToggle();
+        App.ui.showScreen('categories');
+    }, 100);
 });

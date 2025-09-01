@@ -1,4 +1,8 @@
-/* --- Definición de Variables de Color --- */
+/* =====================================================
+    GENERADOR DE CÓDIGOS DE BARRAS - ESTILOS OPTIMIZADOS
+   ===================================================== */
+
+/* === VARIABLES DE COLOR === */
 :root {
     --bg-color: #f0f2f5;
     --card-bg-color: #ffffff;
@@ -13,6 +17,12 @@
     --display-border-color: #dddddd;
     --disabled-btn-bg: #a0aec0;
     --barcode-line-color: #000000;
+    
+    /* Layout variables */
+    --card-width: 500px;
+    --card-height: 100%;
+    --card-gap: 1.5rem;
+    --card-pad: 2.5rem;
 }
 
 [data-theme="dark"] {
@@ -31,8 +41,7 @@
     --barcode-line-color: #ffffff;
 }
 
-/* ------------------------------------ */
-
+/* === RESET Y BASE === */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--bg-color);
@@ -44,25 +53,13 @@ body {
     margin: 0;
     padding: 1rem;
     transition: background-color 0.3s, color 0.3s;
-}
-
-:root {
-    --card-width: 500px;
-    --card-gap: 1.5rem;
-    --card-pad: 2.5rem;
-    /* ... existing variables ... */
-}
-
-body {
-    /* ... existing styles ... */
     overflow-x: hidden;
-    /* Prevenir scroll horizontal durante la animación */
 }
 
+/* === LAYOUT PRINCIPAL === */
 #app-stage {
     display: flex;
     align-items: stretch;
-    /* Asegura que ambas tarjetas tengan la misma altura */
     justify-content: center;
     gap: var(--card-gap);
     width: calc(var(--card-width) + 2 * var(--card-pad));
@@ -116,7 +113,7 @@ body {
     display: none !important;
 }
 
-/* --- ESTILOS DE ANIMACIÓN DE PANTALLA --- */
+/* === ANIMACIONES DE PANTALLA === */
 .screen-content {
     transition: opacity 0.2s ease-in-out;
 }
@@ -126,32 +123,7 @@ body {
     pointer-events: none;
 }
 
-/* ------------------------------------ */
-
-#theme-toggle-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    line-height: 1;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-    color: var(--label-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    /* Asegurar que esté por encima del contenido */
-}
-
-#theme-toggle-btn:hover {
-    background-color: rgba(128, 128, 128, 0.1);
-}
-
+/* === TIPOGRAFÍA === */
 h1 {
     color: var(--primary-color);
     margin-bottom: 1.5rem;
@@ -163,6 +135,149 @@ h1 {
     margin-bottom: 2rem;
 }
 
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--label-color);
+}
+
+/* === SISTEMA DE BOTONES UNIFICADO === */
+.btn-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: var(--display-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    text-align: center;
+}
+
+.btn-nav:hover {
+    transform: translateY(-3px);
+    background-color: var(--input-focus-shadow);
+    border-color: var(--primary-color);
+}
+
+.btn-nav i {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-color-hover);
+}
+
+.btn-primary:disabled {
+    background-color: var(--disabled-btn-bg);
+    cursor: not-allowed;
+    color: var(--text-color);
+}
+
+.btn-icon, .btn-icon-in {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-icon-in {
+    padding: 0.25rem;
+}
+
+.btn-icon:hover, .btn-icon-in:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.btn-icon i{
+    font-size: 1.8rem;
+}
+
+.btn-icon-in i {
+    font-size: 1.5rem;
+}
+
+.btn-back {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    z-index: 10;
+}
+
+.btn-back:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+#theme-toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    z-index: 10;
+}
+
+/* === GRILLAS DE BOTONES === */
+.btn-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-grid.one-col {
+    grid-template-columns: 1fr;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-grid.two-col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.btn-grid.three-col {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* === FORMULARIOS === */
 .selector-group {
     display: flex;
     gap: 1rem;
@@ -179,99 +294,19 @@ h1 {
     text-align: left;
 }
 
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem; /* Aumentar espacio para el nuevo checkbox */
-    margin-bottom: 1rem;
-}
-
-.checkbox-group label {
-    margin-bottom: 0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-/* Ocultar el checkbox original */
-.checkbox-group input[type="checkbox"] {
-    display: none;
-}
-
-/* Crear el checkbox personalizado */
-.checkbox-group label::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 5px;
-    background-color: var(--card-bg-color);
-    transition: background-color 0.2s, border-color 0.2s;
-    flex-shrink: 0; /* Evitar que se encoja */
-}
-
-/* Estilo cuando el checkbox está marcado */
-.checkbox-group input[type="checkbox"]:checked + label::before {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50%;
-}
-
-/* Foco para accesibilidad */
-.checkbox-group input[type="checkbox"]:focus + label::before {
-    outline: none;
-    box-shadow: 0 0 0 3px var(--input-focus-shadow);
-}
-
-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--label-color);
-}
-
 .input-with-icon {
     position: relative;
 }
 
 .input-with-icon input {
-    padding-right: 3rem; /* Dejar espacio para el icono */
+    padding-right: 3rem;
 }
 
-.icon-btn {
+.input-with-icon .btn-icon-in {
     position: absolute;
     top: 50%;
     right: 0.5rem;
     transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    color: var(--label-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-}
-
-.icon-btn:hover {
-    background-color: rgba(128, 128, 128, 0.1);
-}
-
-.icon-btn i {
-    font-size: 1.2rem;
-}
-
-/* Ocultar el icono de revelar contraseña nativo */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-webkit-password-reveal-button {
-    display: none;
 }
 
 select,
@@ -279,7 +314,6 @@ input,
 textarea {
     width: 100%;
     padding: 0.8rem;
-    padding-right: 1.5rem;
     border: 1px solid var(--border-color);
     background-color: var(--card-bg-color);
     color: var(--text-color);
@@ -300,10 +334,64 @@ textarea:focus {
 
 textarea {
     resize: none;
-    overflow-y: hidden;
+    overflow-y: auto;
     line-height: 1.5;
+    max-height: 200px; /* Aproximadamente 7 líneas */
+    min-height: 2.5rem;
 }
 
+input[type="password"]::-ms-reveal,
+input[type="password"]::-webkit-password-reveal-button {
+    display: none;
+}
+
+/* === CHECKBOX PERSONALIZADO === */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-group label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: var(--card-bg-color);
+    transition: background-color 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+
+.checkbox-group input[type="checkbox"]:checked + label::before {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+
+.checkbox-group input[type="checkbox"]:focus + label::before {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+
+/* === ÁREA DE VISUALIZACIÓN === */
 #barcode-display {
     margin-top: 1rem;
     padding: 1.5rem;
@@ -320,6 +408,7 @@ textarea {
     display: block;
 }
 
+/* === MENSAJES === */
 #error-message {
     color: #d93025;
     margin-top: 0.5rem;
@@ -335,57 +424,9 @@ textarea {
     min-height: 2.5em;
 }
 
+/* === CONTENEDORES === */
 .save-container {
     margin-top: 2rem;
-}
-
-#save-btn {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    background-color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-#save-btn:hover:not(:disabled) {
-    background-color: var(--primary-color-hover);
-}
-
-#save-btn:disabled {
-    background-color: var(--disabled-btn-bg);
-    cursor: not-allowed;
-    color: var(--text-color);
-}
-
-/* --- ESTILOS DE NAVEGACIÓN --- */
-
-.back-btn {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    line-height: 1;
-    padding: 0.5rem;
-    border-radius: 8px;
-    color: var(--label-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-    z-index: 10;
-    /* Asegurar que esté por encima del contenido */
-}
-
-.back-btn:hover {
-    background-color: rgba(128, 128, 128, 0.1);
 }
 
 .generator-header {
@@ -397,72 +438,7 @@ textarea {
     text-align: center;
 }
 
-.category-btn-grid {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.nav-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    background-color: var(--display-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
-    text-align: center;
-}
-
-.nav-btn:hover {
-    transform: translateY(-3px);
-    background-color: var(--input-focus-shadow);
-    border-color: var(--primary-color);
-}
-
-.nav-btn i {
-    font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.code-btn-grid {
-    display: grid;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
-.code-btn-grid.grid-1-col {
-    grid-template-columns: 1fr;
-    max-width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.code-btn-grid.grid-2-cols {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.code-btn-grid.grid-3-cols {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-
-/* --- OTROS ESTILOS --- */
-
-#event-start-date,
-#event-start-time,
-#event-end-date,
-#event-end-time {
-    cursor: pointer;
-}
-
+/* === SCROLLBARS === */
 textarea {
     scrollbar-width: thin;
     scrollbar-color: var(--label-color) var(--card-bg-color);
@@ -486,7 +462,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary-color);
 }
 
-/* --- Air Datepicker Theme Integration --- */
+/* === INTEGRACIÓN AIR DATEPICKER === */
 :root .air-datepicker {
     --adp-background-color: var(--card-bg-color);
     --adp-background-color-hover: var(--input-focus-shadow);
@@ -525,6 +501,82 @@ textarea::-webkit-scrollbar-thumb:hover {
     --adp-time-track-color: var(--border-color);
     --adp-time-track-color-hover: var(--primary-color);
 }
+
 [data-theme="dark"] .air-datepicker--pointer:after {
     background: var(--card-bg-color);
+}
+
+/* Estilos específicos para el timepicker */
+.air-datepicker--time, .air-datepicker-time {
+    padding: 0.2rem !important;
+    border-top: none !important;
+}
+
+.air-datepicker--time .air-datepicker-time--current {
+    padding: 0.2rem !important;
+    border-top: none !important;
+}
+
+/* === RESPONSIVO === */
+@media (max-width: 768px) {
+    body {
+        padding: 0.5rem;
+        overflow-y: auto;
+        margin-top: 1.5rem;
     }
+
+    #app-stage {
+        flex-direction: column;
+        transform: translateY(0);
+        transition: transform 0.4s ease-in-out;
+        left: 0;
+    }
+
+    #app-stage.generator-view-active {
+        transform: translateY(calc(-1 * ((var(--card-width) + var(--card-gap)) / 2)));
+        top: calc((var(--card-width) + var(--card-gap)) / 2);
+        left: 0;
+    }
+
+    .container, .preview-card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        flex-shrink: 1;
+    }
+
+    .preview-card {
+        display: none;
+        opacity: 1;
+        transform: none;
+    }
+
+    #app-stage.generator-view-active .preview-card {
+        display: flex;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    .btn-grid.three-col {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* === UTILIDADES === */
+#event-start-date,
+#event-start-time,
+#event-end-date,
+#event-end-time {
+    cursor: pointer;
+    background-color: var(--card-bg-color);
+}
+
+/* Hacer los campos de fecha readonly para evitar escritura manual */
+#event-start-date,
+#event-start-time,
+#event-end-date,
+#event-end-time {
+    pointer-events: auto;
+}

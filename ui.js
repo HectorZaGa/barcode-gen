@@ -74,38 +74,27 @@
     function populateCodeButtons() {
         const currentLevel = App.state.navigationStack[App.state.navigationStack.length - 1];
         const codeSelectionTitle = document.getElementById('code-selection-title');
-        const codeBtnGrid = document.getElementById('code-btn-grid');
+        const btnContainers = document.querySelectorAll('#btn-container > div');
 
         codeSelectionTitle.textContent = currentLevel.name;
-        codeBtnGrid.innerHTML = '';
 
-        codeBtnGrid.className = 'code-btn-grid';
-        if (currentLevel.layout === '2x2') {
-            codeBtnGrid.classList.add('grid-2-cols');
-        } else if (currentLevel.layout === '3x1') {
-            codeBtnGrid.classList.add('grid-3-cols');
-        } else {
-            codeBtnGrid.classList.add('grid-1-col');
+        // Ocultar todos los contenedores de botones primero
+        btnContainers.forEach(container => container.classList.add('hidden'));
+
+        // Mostrar el contenedor de botones correcto
+        let containerToShowId;
+        if (currentLevel.name === "Linear Codes") {
+            containerToShowId = 'linear-buttons';
+        } else if (currentLevel.name === "EAN/UPC") {
+            containerToShowId = 'ean_upc-buttons';
+        } else if (currentLevel.name === "2D Codes") {
+            containerToShowId = '2d-buttons';
+        } else if (currentLevel.name === "QR Code") {
+            containerToShowId = 'qrcode-buttons';
         }
 
-        for (const codeKey in currentLevel.codes) {
-            const code = currentLevel.codes[codeKey];
-            const btn = document.createElement('button');
-            btn.className = 'nav-btn';
-            btn.dataset.code = codeKey;
-            btn.innerHTML = `<i class="ti ${code.icon || 'ti-point'}"></i><span>${code.displayName}</span>`;
-            btn.addEventListener('click', () => {
-                if (code.subCategory) {
-                    App.state.navigationStack.push(code.subCategory);
-                    populateCodeButtons();
-                } else {
-                    App.state.currentCodeKey = codeKey;
-                    App.state.currentCodeConfig = code;
-                    App.ui.setupGeneratorUI();
-                    App.ui.showScreen('generator');
-                }
-            });
-            codeBtnGrid.appendChild(btn);
+        if (containerToShowId) {
+            document.getElementById(containerToShowId).classList.remove('hidden');
         }
     }
 
@@ -135,22 +124,8 @@
 
     function autoResizeTextarea() {
         const dataInput = document.getElementById('barcode-data');
-        const MAX_LINES = 7;
         dataInput.style.height = 'auto';
-        const styles = window.getComputedStyle(dataInput);
-        const lineHeight = parseFloat(styles.lineHeight);
-        const paddingTop = parseFloat(styles.paddingTop);
-        const paddingBottom = parseFloat(styles.paddingBottom);
-        const maxHeight = (lineHeight * MAX_LINES) + paddingTop + paddingBottom;
-        
-        if (dataInput.scrollHeight > maxHeight) {
-            dataInput.style.height = `${maxHeight}px`;
-            dataInput.style.overflowY = 'auto';
-        } else {
-            dataInput.style.height = `${dataInput.scrollHeight}px`;
-            dataInput.style.overflowY = 'hidden';
-        }
-        setTimeout(autoResizeTextarea, 0);
+        dataInput.style.height = `${Math.min(dataInput.scrollHeight, 200)}px`; // 200px = aproximadamente 7 líneas
     }
 
     function initializeTheme() {
@@ -162,7 +137,7 @@
             if (isDark) {
                 docElement.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
-                themeToggleBtn.innerHTML = '<i class="ti ti-moon-filled"></i>';
+                themeToggleBtn.innerHTML = '<i class="ti ti-moon"></i>';
             } else {
                 docElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');

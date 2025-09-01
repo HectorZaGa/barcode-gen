@@ -7,14 +7,14 @@
     
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.css">
 </head>
 <body>
 
     <div id="app-stage">
         <div class="container">
-            <button id="theme-toggle-btn">
-                <i class="ti ti-moon-filled"></i>
+            <button id="theme-toggle-btn" class="btn-icon">
+                <i class="ti ti-moon"></i>
             </button>
 
             <!-- Pantalla 1: Selección de Categoría -->
@@ -22,16 +22,16 @@
                 <div class="screen-content">
                     <h1>Generador de Códigos</h1>
                     <p class="subtitle">Selecciona una categoría para empezar</p>
-                    <div class="category-btn-grid">
-                        <button class="nav-btn category-btn" data-category="linear">
+                    <div class="btn-grid three-col">
+                        <button class="btn-nav" data-category="linear">
                             <i class="ti ti-barcode"></i>
                             <span>Linear Codes</span>
                         </button>
-                        <button class="nav-btn category-btn" data-category="ean_upc">
+                        <button class="btn-nav" data-category="ean_upc">
                             <i class="ti ti-scan"></i>
                             <span>EAN/UPC</span>
                         </button>
-                        <button class="nav-btn category-btn" data-category="2d">
+                        <button class="btn-nav" data-category="2d">
                             <i class="ti ti-qrcode"></i>
                             <span>2D Codes</span>
                         </button>
@@ -41,20 +41,38 @@
 
             <!-- Pantalla 2: Selección de Tipo de Código -->
             <div id="code-selection-container" class="hidden">
-                <button id="code-selection-back-btn" class="back-btn"><i class="ti ti-arrow-left"></i></button>
+                <button id="code-selection-back-btn" class="btn-back"><i class="ti ti-arrow-left"></i></button>
                 <div class="screen-content">
                     <div class="generator-header">
                         <h1 id="code-selection-title"></h1>
                     </div>
-                    <div id="code-btn-grid" class="code-btn-grid">
-                        <!-- Botones de tipo de código se insertan aquí por JS -->
+                    <div id="btn-container">
+                        <!-- Contenedores de botones estáticos -->
+                        <div id="linear-buttons" class="btn-grid two-col hidden">
+                            <button class="btn-nav" data-code="code128"><i class="ti ti-barcode"></i><span>Code 128</span></button>
+                            <button class="btn-nav" data-code="code39"><i class="ti ti-barcode"></i><span>Code 39</span></button>
+                            <button class="btn-nav" data-code="codabar"><i class="ti ti-barcode"></i><span>Codabar</span></button>
+                            <button class="btn-nav" data-code="itf14"><i class="ti ti-barcode"></i><span>ITF-14</span></button>
+                        </div>
+                        <div id="ean_upc-buttons" class="btn-grid two-col hidden">
+                            <button class="btn-nav" data-code="ean13"><i class="ti ti-scan"></i><span>EAN-13</span></button>
+                            <button class="btn-nav" data-code="upca"><i class="ti ti-scan"></i><span>UPC-A</span></button>
+                        </div>
+                        <div id="2d-buttons" class="btn-grid one-col hidden">
+                            <button class="btn-nav" data-subcategory="qrcode"><i class="ti ti-qrcode"></i><span>QR Code</span></button>
+                        </div>
+                        <div id="qrcode-buttons" class="btn-grid three-col hidden">
+                            <button class="btn-nav" data-code="url"><i class="ti ti-world"></i><span>Texto/URL</span></button>
+                            <button class="btn-nav" data-code="event"><i class="ti ti-calendar-week"></i><span>Evento</span></button>
+                            <button class="btn-nav" data-code="wifi"><i class="ti ti-wifi"></i><span>WiFi</span></button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Pantalla 3: Generador -->
             <div id="generator-container" class="hidden">
-                <button id="generator-back-btn" class="back-btn"><i class="ti ti-arrow-left"></i></button>
+                <button id="generator-back-btn" class="btn-back"><i class="ti ti-arrow-left"></i></button>
                 <div class="screen-content">
                     <div class="generator-header">
                         <h1 id="generator-title"></h1>
@@ -85,50 +103,50 @@
                         <div class="selector-group">
                             <div class="form-group">
                                 <label for="event-start-date">Fecha de Inicio</label>
-                                <input type="text" id="event-start-date" placeholder="Seleccionar fecha...">
+                                <input type="text" id="event-start-date" placeholder="Seleccionar fecha..." readonly>
                             </div>
                             <div class="form-group">
                                 <label for="event-start-time">Hora de Inicio</label>
-                                <input type="text" id="event-start-time" placeholder="Seleccionar hora...">
+                                <input type="text" id="event-start-time" placeholder="Seleccionar hora..." readonly>
                             </div>
                         </div>
                         <div class="selector-group">
                             <div class="form-group">
                                 <label for="event-end-date">Fecha de Fin</label>
-                                <input type="text" id="event-end-date" placeholder="Seleccionar fecha...">
+                                <input type="text" id="event-end-date" placeholder="Seleccionar fecha..." readonly>
                             </div>
                             <div class="form-group">
                                 <label for="event-end-time">Hora de Fin</label>
-                                <input type="text" id="event-end-time" placeholder="Seleccionar hora...">
+                                <input type="text" id="event-end-time" placeholder="Seleccionar hora..." readonly>
                             </div>
                         </div>
                     </div>
 
                     <div id="wifi-fields-container" class="hidden">
                         <div class="form-group">
-                            <label for="wifi-auth-type">Authentication</label>
+                            <label for="wifi-auth-type">Autenticación</label>
                             <select id="wifi-auth-type">
                                 <option value="WPA" selected>WPA/WPA2</option>
                                 <option value="WEP">WEP</option>
-                                <option value="nopass">None</option>
+                                <option value="nopass">Ninguno</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="wifi-ssid">Network Name (SSID)</label>
+                            <label for="wifi-ssid">Nombre de la Red (SSID)</label>
                             <input type="text" id="wifi-ssid" placeholder="NombreDeMiRed">
                         </div>
                         <div class="form-group">
-                            <label for="wifi-password">Password</label>
+                            <label for="wifi-password">Contraseña</label>
                             <div class="input-with-icon">
                                 <input type="password" id="wifi-password" placeholder="Contraseña">
-                                <button type="button" id="password-toggle-btn" class="icon-btn" aria-label="Toggle password visibility">
+                                <button type="button" id="password-toggle-btn" class="btn-icon-in" aria-label="Toggle password visibility">
                                     <i class="ti ti-eye"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="checkbox-group">
                             <input type="checkbox" id="wifi-hidden">
-                            <label for="wifi-hidden">Network is Hidden</label>
+                            <label for="wifi-hidden">Red Oculta</label>
                         </div>
                     </div>
 
@@ -138,7 +156,7 @@
                     </div>
 
                     <div class="save-container">
-                        <button id="save-btn" disabled>Guardar</button>
+                        <button id="save-btn" class="btn-primary" disabled>Guardar</button>
                     </div>
                 </div>
             </div>
