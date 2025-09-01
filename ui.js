@@ -180,12 +180,39 @@
         }
     }
 
+    function initPasswordToggle() {
+        const passwordInput = document.getElementById('wifi-password');
+        const wrapper = passwordInput.parentElement;
+
+        const btn = document.createElement('button');
+        btn.className = 'password-toggle-btn';
+        btn.innerHTML = '<i class="ti ti-eye"></i>';
+        btn.type = 'button'; // To prevent form submission
+
+        btn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            btn.innerHTML = isPassword ? '<i class="ti ti-eye-off"></i>' : '<i class="ti ti-eye"></i>';
+        });
+
+        wrapper.appendChild(btn);
+
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.length > 0) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
+    }
+
     window.App = window.App || {};
     window.App.ui = {
         showScreen,
         populateCodeButtons,
         setupGeneratorUI,
         autoResizeTextarea,
-        initializeTheme
+        initializeTheme,
+        initPasswordToggle
     };
 })();
