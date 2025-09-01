@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Códigos de Barras Interactivo</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.css">
+</head>
+<body>
+
+    <div id="app-stage">
+        <div class="container">
+            <button id="theme-toggle-btn">
+                <i class="ti ti-moon-filled"></i>
+            </button>
+
+            <!-- Pantalla 1: Selección de Categoría -->
+            <div id="category-selection-container">
+                <div class="screen-content">
+                    <h1>Generador de Códigos</h1>
+                    <p class="subtitle">Selecciona una categoría para empezar</p>
+                    <div class="category-btn-grid">
+                        <button class="nav-btn category-btn" data-category="linear">
+                            <i class="ti ti-barcode"></i>
+                            <span>Linear Codes</span>
+                        </button>
+                        <button class="nav-btn category-btn" data-category="ean_upc">
+                            <i class="ti ti-scan"></i>
+                            <span>EAN/UPC</span>
+                        </button>
+                        <button class="nav-btn category-btn" data-category="2d">
+                            <i class="ti ti-qrcode"></i>
+                            <span>2D Codes</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pantalla 2: Selección de Tipo de Código -->
+            <div id="code-selection-container" class="hidden">
+                <button id="code-selection-back-btn" class="back-btn"><i class="ti ti-arrow-left"></i></button>
+                <div class="screen-content">
+                    <div class="generator-header">
+                        <h1 id="code-selection-title"></h1>
+                    </div>
+                    <div id="code-btn-grid" class="code-btn-grid">
+                        <!-- Botones de tipo de código se insertan aquí por JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pantalla 3: Generador -->
+            <div id="generator-container" class="hidden">
+                <button id="generator-back-btn" class="back-btn"><i class="ti ti-arrow-left"></i></button>
+                <div class="screen-content">
+                    <div class="generator-header">
+                        <h1 id="generator-title"></h1>
+                    </div>
+
+                    
+
+                    <div id="data-input-container" class="form-group">
+                        <label for="barcode-data">Datos a Codificar:</label>
+                        <textarea id="barcode-data" placeholder="Introduce los datos aquí..." rows="1"></textarea>
+                        <div id="hint"></div>
+                        <div id="error-message"></div>
+                    </div>
+
+                    <div id="event-fields-container" class="hidden">
+                        <div class="form-group">
+                            <label for="event-title">Título del Evento</label>
+                            <input type="text" id="event-title" placeholder="Reunión de equipo">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-location">Ubicación</label>
+                            <input type="text" id="event-location" placeholder="Oficina, Sala 4B">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-description">Descripción</label>
+                            <textarea id="event-description" rows="2" placeholder="Discutir el progreso del proyecto..."></textarea>
+                        </div>
+                        <div class="selector-group">
+                            <div class="form-group">
+                                <label for="event-start-date">Fecha de Inicio</label>
+                                <input type="text" id="event-start-date" placeholder="Seleccionar fecha...">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-start-time">Hora de Inicio</label>
+                                <input type="text" id="event-start-time" placeholder="Seleccionar hora...">
+                            </div>
+                        </div>
+                        <div class="selector-group">
+                            <div class="form-group">
+                                <label for="event-end-date">Fecha de Fin</label>
+                                <input type="text" id="event-end-date" placeholder="Seleccionar fecha...">
+                            </div>
+                            <div class="form-group">
+                                <label for="event-end-time">Hora de Fin</label>
+                                <input type="text" id="event-end-time" placeholder="Seleccionar hora...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="wifi-fields-container" class="hidden">
+                        <div class="form-group">
+                            <label for="wifi-auth-type">Authentication</label>
+                            <select id="wifi-auth-type">
+                                <option value="WPA" selected>WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass">None</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="wifi-ssid">Network Name (SSID)</label>
+                            <input type="text" id="wifi-ssid" placeholder="NombreDeMiRed">
+                        </div>
+                        <div class="form-group">
+                            <label for="wifi-password">Password</label>
+                            <input type="password" id="wifi-password" placeholder="Contraseña">
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="wifi-hidden">
+                            <label for="wifi-hidden">Network is Hidden</label>
+                        </div>
+                    </div>
+
+                    <div id="barcode-display">
+                        <svg id="barcode-svg"></svg>
+                        <div id="qr-code-container"></div>
+                    </div>
+
+                    <div class="save-container">
+                        <button id="save-btn" disabled>Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="preview-card"></div>
+    </div>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-svg@1.1.0/dist/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.js"></script>
+    <script src="ui.js"></script>
+    <script src="generator.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

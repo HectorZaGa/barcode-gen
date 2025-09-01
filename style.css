@@ -1,0 +1,459 @@
+/* --- Definición de Variables de Color --- */
+:root {
+    --bg-color: #f0f2f5;
+    --card-bg-color: #ffffff;
+    --text-color: #333333;
+    --label-color: #555555;
+    --hint-color: #666666;
+    --primary-color: #1e3a8a;
+    --primary-color-hover: #1c3172;
+    --border-color: #cccccc;
+    --input-focus-shadow: rgba(30, 58, 138, 0.1);
+    --display-bg-color: #f9f9f9;
+    --display-border-color: #dddddd;
+    --disabled-btn-bg: #a0aec0;
+    --barcode-line-color: #000000;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a202c;
+    --card-bg-color: #2d3748;
+    --text-color: #e2e8f0;
+    --label-color: #a0aec0;
+    --hint-color: #a0aec0;
+    --primary-color: #63b3ed;
+    --primary-color-hover: #4299e1;
+    --border-color: #4a5568;
+    --input-focus-shadow: rgba(90, 103, 216, 0.2);
+    --display-bg-color: #1e2533;
+    --display-border-color: #4a5568;
+    --disabled-btn-bg: #4a5568;
+    --barcode-line-color: #ffffff;
+}
+
+/* ------------------------------------ */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+    --card-width: 500px;
+    --card-gap: 1.5rem;
+    --card-pad: 2.5rem;
+    /* ... existing variables ... */
+}
+
+body {
+    /* ... existing styles ... */
+    overflow-x: hidden;
+    /* Prevenir scroll horizontal durante la animación */
+}
+
+#app-stage {
+    display: flex;
+    align-items: stretch;
+    /* Asegura que ambas tarjetas tengan la misma altura */
+    justify-content: center;
+    gap: var(--card-gap);
+    width: calc(var(--card-width) + 2 * var(--card-pad));
+    position: relative;
+    left: calc((var(--card-width) + 3 * (var(--card-gap))) / 2);
+    transform: translateX(0);
+    transition: transform 0.4s ease-in-out;
+}
+
+#app-stage.generator-view-active {
+    transform: translateX(calc(-1 * ((var(--card-width) + var(--card-gap)) / 2)));
+    left: calc((var(--card-width) + var(--card-gap)) / 2);
+}
+
+.container {
+    position: relative;
+    background-color: var(--card-bg-color);
+    padding: var(--card-pad);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: var(--card-width);
+    max-width: var(--card-width);
+    text-align: center;
+    transition: background-color 0.3s;
+    flex-shrink: 0;
+}
+
+.preview-card {
+    width: var(--card-width);
+    flex-shrink: 0;
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.3s ease-in-out 0.1s, transform 0.3s ease-in-out 0.1s;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#app-stage.generator-view-active .preview-card {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- ESTILOS DE ANIMACIÓN DE PANTALLA --- */
+.screen-content {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.screen-content-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ------------------------------------ */
+
+#theme-toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    /* Asegurar que esté por encima del contenido */
+}
+
+#theme-toggle-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+h1 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.subtitle {
+    color: var(--label-color);
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+}
+
+.selector-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.selector-group .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--label-color);
+}
+
+select,
+input,
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    padding-right: 1.5rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, height 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+
+textarea {
+    resize: none;
+    overflow-y: hidden;
+    line-height: 1.5;
+}
+
+#barcode-display {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: var(--display-bg-color);
+    border: 1px dashed var(--display-border-color);
+    border-radius: 8px;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#qr-code-container svg {
+    display: block;
+}
+
+#error-message {
+    color: #d93025;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+#hint {
+    font-size: 0.9rem;
+    color: var(--hint-color);
+    margin-top: 0.5rem;
+    text-align: left;
+    min-height: 2.5em;
+}
+
+.save-container {
+    margin-top: 2rem;
+}
+
+#save-btn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#save-btn:hover:not(:disabled) {
+    background-color: var(--primary-color-hover);
+}
+
+#save-btn:disabled {
+    background-color: var(--disabled-btn-bg);
+    cursor: not-allowed;
+    color: var(--text-color);
+}
+
+/* --- ESTILOS DE NAVEGACIÓN --- */
+
+.back-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.5rem;
+    border-radius: 8px;
+    color: var(--label-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    z-index: 10;
+    /* Asegurar que esté por encima del contenido */
+}
+
+.back-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.generator-header {
+    margin-bottom: 1.5rem;
+}
+
+.generator-header h1 {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.category-btn-grid {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: var(--display-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    text-align: center;
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+    background-color: var(--input-focus-shadow);
+    border-color: var(--primary-color);
+}
+
+.nav-btn i {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.code-btn-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.code-btn-grid.grid-1-col {
+    grid-template-columns: 1fr;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.code-btn-grid.grid-2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.code-btn-grid.grid-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+/* --- OTROS ESTILOS --- */
+
+#event-start-date,
+#event-start-time,
+#event-end-date,
+#event-end-time {
+    cursor: pointer;
+}
+
+textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--label-color) var(--card-bg-color);
+}
+
+textarea::-webkit-scrollbar {
+    width: 12px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: var(--label-color);
+    border-radius: 10px;
+    border: 3px solid var(--card-bg-color);
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color);
+}
+
+/* --- Air Datepicker Theme Integration --- */
+:root .air-datepicker {
+    --adp-background-color: var(--card-bg-color);
+    --adp-background-color-hover: var(--input-focus-shadow);
+    --adp-background-color-active: var(--input-focus-shadow);
+    --adp-color: var(--text-color);
+    --adp-color-secondary: var(--label-color);
+    --adp-accent-color: var(--primary-color);
+    --adp-color-other-month: var(--hint-color);
+    --adp-color-disabled: var(--disabled-btn-bg);
+    --adp-border-color: var(--border-color);
+    --adp-border-color-inner: var(--border-color);
+    --adp-border-color-inline: var(--border-color);
+    --adp-day-name-color: var(--primary-color);
+    --adp-cell-background-color-selected: var(--primary-color);
+    --adp-cell-background-color-selected-hover: var(--primary-color-hover);
+    --adp-time-track-color: var(--border-color);
+    --adp-time-track-color-hover: var(--primary-color);
+    border-radius: 12px;
+}
+
+[data-theme="dark"] .air-datepicker {
+    --adp-background-color: var(--card-bg-color);
+    --adp-background-color-hover: var(--input-focus-shadow);
+    --adp-background-color-active: var(--input-focus-shadow);
+    --adp-color: var(--text-color);
+    --adp-color-secondary: var(--label-color);
+    --adp-accent-color: var(--primary-color);
+    --adp-color-other-month: var(--hint-color);
+    --adp-color-disabled: var(--disabled-btn-bg);
+    --adp-border-color: var(--border-color);
+    --adp-border-color-inner: var(--border-color);
+    --adp-border-color-inline: var(--border-color);
+    --adp-day-name-color: var(--primary-color);
+    --adp-cell-background-color-selected: var(--primary-color);
+    --adp-cell-background-color-selected-hover: var(--primary-color-hover);
+    --adp-time-track-color: var(--border-color);
+    --adp-time-track-color-hover: var(--primary-color);
+}
+[data-theme="dark"] .air-datepicker--pointer:after {
+    background: var(--card-bg-color);
+    }
