@@ -1,107 +1,107 @@
-# 📊 Generador de Códigos de Barras Interactivo
+# 📊 Interactive Barcode Generator
 
-Una aplicación web moderna y responsive para generar códigos de barras lineales, códigos EAN/UPC y códigos QR con múltiples tipos de contenido.
+A modern and responsive web application to generate linear barcodes, EAN/UPC codes, and QR codes with multiple content types.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 
-## ✨ Características
+## ✨ Features
 
-### 🔢 Códigos Lineales
-- **Code 128**: Codifica cualquier carácter ASCII
-- **Code 39**: Soporta letras mayúsculas, números y caracteres especiales
-- **Codabar**: Ideal para bibliotecas y bancos de sangre
-- **ITF-14**: Código industrial de 14 dígitos con dígito de control automático
+### 🔢 Linear Codes
+- **Code 128**: Encodes any ASCII character
+- **Code 39**: Supports uppercase letters, numbers, and special characters
+- **Codabar**: Ideal for libraries and blood banks
+- **ITF-14**: 14-digit industrial code with automatic check digit
 
-### 🏷️ Códigos EAN/UPC
-- **EAN-13**: Estándar europeo de 13 dígitos con cálculo automático del dígito de control
-- **UPC-A**: Estándar norteamericano de 12 dígitos con cálculo automático del dígito de control
+### 🏷️ EAN/UPC Codes
+- **EAN-13**: European 13-digit standard with automatic check digit calculation
+- **UPC-A**: North American 12-digit standard with automatic check digit calculation
 
-### 📱 Códigos QR
-- **Texto/URL**: Genera QR para cualquier texto o enlace web
-- **Eventos**: Crea códigos QR para eventos de calendario (.ics)
-  - Título y fecha obligatorios
-  - Hora, ubicación y descripción opcionales
-- **WiFi**: Códigos QR para conexión automática a redes WiFi
-  - Soporta WPA/WPA2, WEP y redes abiertas
-  - Opción para redes ocultas
+### 📱 QR Codes
+- **Text/URL**: Generate QR codes for any text or web link
+- **Events**: Create QR codes for calendar events (.ics)
+  - Title and date required
+  - Time, location, and description optional
+- **WiFi**: QR codes for automatic WiFi connection
+  - Supports WPA/WPA2, WEP, and open networks
+  - Option for hidden networks
 
-## 🚀 Características Técnicas
+## 🚀 Technical Features
 
-- **📱 Diseño Responsive**: Optimizado para dispositivos móviles y desktop
-- **🌙 Modo Oscuro**: Alternancia entre tema claro y oscuro
-- **📅 Selector de Fechas**: Integración con Air Datepicker para eventos
-- **💾 Descarga**: Guarda códigos generados en formato PNG de alta calidad
-- **⚡ Sin Backend**: Funciona completamente en el navegador
-- **🎨 Interfaz Moderna**: Diseño limpio con iconos Tabler
+- **📱 Responsive Design**: Optimized for mobile and desktop
+- **🌙 Dark Mode**: Toggle between light and dark theme
+- **📅 Date Picker**: Integrated with Air Datepicker for events
+- **💾 Download**: Save generated codes as high-quality PNG
+- **⚡ No Backend**: Runs entirely in the browser
+- **🎨 Modern UI**: Clean design with Tabler icons
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠️ Technologies Used
 
 - **Frontend**: HTML5, CSS3 (Grid/Flexbox), JavaScript ES6+
-- **Librerías**:
-  - [JsBarcode](https://github.com/lindell/JsBarcode) - Generación de códigos de barras
-  - [QRCode-SVG](https://github.com/papnkukn/qrcode-svg) - Generación de códigos QR
-  - [Air Datepicker](https://air-datepicker.com/) - Selector de fechas responsive
-  - [Tabler Icons](https://tabler-icons.io/) - Iconografía moderna
-- **Herramientas**: Popper.js para tooltips y posicionamiento
+- **Libraries**:
+  - [JsBarcode](https://github.com/lindell/JsBarcode) - Barcode generation
+  - [QRCode-SVG](https://github.com/papnkukn/qrcode-svg) - QR code generation
+  - [Air Datepicker](https://air-datepicker.com/) - Responsive date picker
+  - [Tabler Icons](https://tabler-icons.io/) - Modern icon set
+- **Tools**: Popper.js for tooltips and positioning
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 DEV/
-├── index.html          # Estructura principal de la aplicación
-├── style.css           # Estilos optimizados con sistema de grid responsive
-├── script.js           # Lógica principal y manejo de eventos
-├── ui.js               # Funciones de interfaz de usuario
-├── generator.js        # Lógica de generación de códigos
-└── README.md          # Este archivo
+├── index.html          # Main application structure
+├── style.css           # Optimized styles with responsive grid system
+├── script.js           # Core logic and event handling
+├── ui.js               # User interface functions
+├── generator.js        # Code generation logic
+└── README.md           # This file
 ```
 
-## 🔧 Instalación y Uso
+## 🔧 Installation & Usage
 
-### Opción 1: Uso Directo
-1. Clona o descarga el repositorio
-2. Abre `index.html` en tu navegador web
-3. ¡Listo! La aplicación funciona completamente offline
+### Option 1: Direct Use
+1. Clone or download the repository
+2. Open `index.html` in your web browser
+3. Done! The app works completely offline
 
-### Opción 2: Servidor Local
+### Option 2: Local Server
 ```bash
-# Con Python 3
+# With Python 3
 python -m http.server 8000
 
-# Con Node.js (usando npx)
+# With Node.js (using npx)
 npx serve .
 
-# Con PHP
+# With PHP
 php -S localhost:8000
 ```
 
-Luego visita `http://localhost:8000` en tu navegador.
+Then visit `http://localhost:8000` in your browser.
 
-## 💡 Cómo Usar
+## 💡 How to Use
 
-1. **Selecciona una Categoría**: Elige entre códigos lineales, EAN/UPC o códigos 2D
-2. **Selecciona el Tipo**: Escoge el formato específico de código
-3. **Introduce los Datos**: 
-   - Para códigos de barras: introduce el texto o números
-   - Para eventos: completa título y fecha (hora opcional)
-   - Para WiFi: introduce SSID y configuración de seguridad
-4. **Genera y Descarga**: El código se genera automáticamente y puedes descargarlo
+1. **Choose a Category**: Select from linear codes, EAN/UPC, or 2D codes
+2. **Select the Type**: Pick the specific code format
+3. **Enter Data**:
+   - For barcodes: input text or numbers
+   - For events: provide title and date (time optional)
+   - For WiFi: enter SSID and security settings
+4. **Generate & Download**: The code is generated automatically and can be downloaded
 
-## 🎨 Características de UI/UX
+## 🎨 UI/UX Features
 
-- **Navegación Intuitiva**: Sistema de navegación por pasos con botones de retroceso
-- **Validación en Tiempo Real**: Los códigos se generan automáticamente al escribir
-- **Hints Contextuales**: Ayuda específica para cada tipo de código
-- **Grid Responsivo**: Layout que se adapta automáticamente al dispositivo
-- **Centrado Inteligente**: Los elementos impares se centran automáticamente en responsive
+- **Intuitive Navigation**: Step-based navigation with back buttons
+- **Real-Time Validation**: Codes are generated automatically as you type
+- **Contextual Hints**: Specific help for each code type
+- **Responsive Grid**: Layout adapts to any device
+- **Smart Centering**: Odd-numbered items auto-center in responsive layouts
 
-## 🔍 Detalles Técnicos
+## 🔍 Technical Details
 
-### Sistema de Configuración
-La aplicación utiliza un sistema de configuración modular que permite fácil extensión:
+### Configuration System
+The app uses a modular configuration system for easy extension:
 
 ```javascript
 App.config = {
@@ -112,22 +112,22 @@ App.config = {
             code128: { 
                 displayName: "Code 128", 
                 icon: 'ti-barcode', 
-                placeholder: "Ej: Ejemplo123!", 
+                placeholder: "Ex: Example123!", 
                 type: "1d" 
             }
-            // ...más códigos
+            // ...more codes
         }
     }
-    // ...más categorías
+    // ...more categories
 };
 ```
 
 ### Responsive Design
-- **Breakpoint Principal**: 768px para transición mobile/desktop
-- **Grid System**: CSS Grid con clases `.btn-grid` modulares
-- **Centrado Automático**: Elementos impares se centran en layouts responsive
+- **Main Breakpoint**: 768px for mobile/desktop transition
+- **Grid System**: CSS Grid with modular `.btn-grid` classes
+- **Auto-Centering**: Odd-numbered elements centered in responsive layouts
 
-### Gestión del Estado
+### State Management
 ```javascript
 App.state = {
     currentCategory: null,
@@ -137,50 +137,50 @@ App.state = {
 };
 ```
 
-## 🤝 Contribuir
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas! Para contribuir:
+Contributions are welcome! To contribute:
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a new feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to your branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📋 Roadmap
 
-- [ ] Soporte para más tipos de códigos de barras
-- [ ] Batch generation (generación masiva)
-- [ ] Plantillas predefinidas
-- [ ] Exportación en más formatos (SVG, PDF)
-- [ ] API REST opcional
+- [ ] Support for more barcode types
+- [ ] Batch generation
+- [ ] Predefined templates
+- [ ] Export in more formats (SVG, PDF)
+- [ ] Optional REST API
 - [ ] PWA (Progressive Web App)
 
-## 🐛 Reportar Bugs
+## 🐛 Bug Reports
 
-Si encuentras algún problema, por favor:
+If you find any issues, please:
 
-1. Verifica que no esté ya reportado en [Issues](../../issues)
-2. Crea un nuevo issue con:
-   - Descripción clara del problema
-   - Pasos para reproducirlo
-   - Navegador y versión
-   - Screenshots si es posible
+1. Check if it’s already reported in [Issues](../../issues)
+2. Open a new issue with:
+   - Clear problem description
+   - Steps to reproduce
+   - Browser and version
+   - Screenshots if possible
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is under the MIT License. See the `LICENSE` file for details.
 
-## 🙏 Agradecimientos
+## 🙏 Acknowledgements
 
-- [JsBarcode](https://github.com/lindell/JsBarcode) por la excelente librería de códigos de barras
-- [QRCode-SVG](https://github.com/papnkukn/qrcode-svg) por la generación de códigos QR
-- [Air Datepicker](https://air-datepicker.com/) por el selector de fechas responsive
-- [Tabler Icons](https://tabler-icons.io/) por los iconos modernos y gratuitos
+- [JsBarcode](https://github.com/lindell/JsBarcode) for the excellent barcode library
+- [QRCode-SVG](https://github.com/papnkukn/qrcode-svg) for QR code generation
+- [Air Datepicker](https://air-datepicker.com/) for the responsive date picker
+- [Tabler Icons](https://tabler-icons.io/) for free, modern icons
 
 ---
 
-**⭐ Si este proyecto te ha sido útil, considera darle una estrella!**
+**⭐ If you found this project useful, consider giving it a star!**
 
-**🔗 Demo en vivo**: [Ver aplicación](https://hectorzaga.github.io/barcode-gen/)
+**🔗 Live Demo**: [View App](https://hectorzaga.github.io/barcode-gen/)
 
