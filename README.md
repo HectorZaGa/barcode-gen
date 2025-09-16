@@ -182,4 +182,5 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 **⭐ Si este proyecto te ha sido útil, considera darle una estrella!**
 
-**🔗 Demo en vivo**: [Ver aplicación](https://tu-usuario.github.io/barcodes-generator)
+**🔗 Demo en vivo**: [Ver aplicación](https://hectorzaga.github.io/barcode-gen/)
+
