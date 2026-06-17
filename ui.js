@@ -172,7 +172,7 @@
             } else {
                 docElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
-                themeToggleBtn.innerHTML = '<i class="ti ti-sun-filled"></i>';
+                themeToggleBtn.innerHTML = '<i class="ti ti-sun"></i>';
             }
             if (document.getElementById('generator-container').offsetParent !== null) {
                 App.generator.generateBarcode();
@@ -182,7 +182,7 @@
         const savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
             docElement.setAttribute('data-theme', 'dark');
-            themeToggleBtn.innerHTML = '<i class="ti ti-sun-filled"></i>';
+            themeToggleBtn.innerHTML = '<i class="ti ti-sun"></i>';
         }
     }
 
